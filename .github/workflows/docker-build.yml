@@ -49,4 +49,4 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git tag ${{ env.NEW_TAG }}
-          git push https://${{ secrets.ACTIONS_PAT }}@https://github.com/dordavid015/first-project.git ${{ env.NEW_TAG }}
+          git push https://${{ secrets.ACTIONS_PAT }}@github.com/dordavid015/first-project.git ${{ env.NEW_TAG }}
