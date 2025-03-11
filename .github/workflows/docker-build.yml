@@ -1,6 +1,7 @@
 name: Build and Push Producer & Consumer Images
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
