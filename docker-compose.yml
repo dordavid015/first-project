@@ -1,0 +1,19 @@
+version: '3.0'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+    - 5672:5672 # port for the daemon API
+    - 15672:15672 # port for the RabbitMQ management interface
+  consumer:
+    build: consumer
+    links:
+    - rabbitmq
+    command: python consumer.py -p 5672 -s rabbitmq
+  producer:
+    build: producer
+    links:
+    - rabbitmq
+    # run the producer sending the message "Hello" 30 times
+    command: 'python producer.py -p 5672 -s rabbitmq -m "Hello" -r 30'
