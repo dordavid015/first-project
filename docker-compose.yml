@@ -4,16 +4,28 @@ services:
     image: rabbitmq:3-management
     restart: always
     ports:
-    - 5672:5672 # port for the daemon API
-    - 15672:15672 # port for the RabbitMQ management interface
+      - 5672:5672 # port for the daemon API
+      - 15672:15672 # port for the RabbitMQ management interface
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  
   consumer:
     build: consumer
-    links:
-    - rabbitmq
+    depends_on:
+      - rabbitmq
+    ports:
+      - 9422:9422  # expose the Prometheus metrics port
     command: python consumer.py -p 5672 -s rabbitmq
+    restart: on-failure
+  
   producer:
     build: producer
-    links:
-    - rabbitmq
-    # run the producer sending the message "Hello" 30 times
-    command: 'python producer.py -p 5672 -s rabbitmq -m "Hello" -r 30'
+    depends_on:
+      - rabbitmq
+    # run the producer continuously sending messages every 20 seconds
+    command: 'python producer.py -p 5672 -s rabbitmq -m "Hello"'
+    restart: on-failure
+  
