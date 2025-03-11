@@ -49,4 +49,4 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
           git tag ${{ env.NEW_TAG }}
-          git push origin ${{ env.NEW_TAG }}
+          git push https://${{ secrets.ACTIONS_PAT }}@github.com/YOUR_USERNAME/YOUR_REPO.git ${{ env.NEW_TAG }}
