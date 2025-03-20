@@ -51,7 +51,10 @@ if __name__ == '__main__':
         LOG.error("Failed to start Prometheus metrics server: {}".format(str(e)))
         sys.exit(1)
     
-    credentials = pika.PlainCredentials('guest', 'guest')
+    username = os.environ.get("MQ_USER", "user")
+    password = os.environ.get("MQ_PASS", "password")
+    credentials = pika.PlainCredentials(username, password)
+
     parameters = pika.ConnectionParameters(args.server,
                                            int(args.port),
                                            '/',

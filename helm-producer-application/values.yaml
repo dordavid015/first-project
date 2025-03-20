@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:
+  repository: dordavidisrael/producer
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+env:
+  - name: MQ_HOST
+    value: "rabbitmq-service"
+  - name: MQ_PORT
+    value: "5672"
+  - name: MQ_USER
+    value: "user"
+  - name: MQ_PASS
+    value: "password"
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 200m
+    memory: 256Mi

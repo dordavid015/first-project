@@ -14,20 +14,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Get latest version tag
-        id: get_version
-        run: |
-          LATEST_TAG=$(git tag --sort=-v:refname | head -n 1)
-          if [[ -z "$LATEST_TAG" ]]; then
-            NEW_TAG="1.0.0"
-          else
-            MAJOR=$(echo $LATEST_TAG | cut -d. -f1)
-            MINOR=$(echo $LATEST_TAG | cut -d. -f2)
-            PATCH=$(echo $LATEST_TAG | cut -d. -f3)
-            NEW_TAG="$MAJOR.$MINOR.$((PATCH + 1))"
-          fi
-          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
-
       - name: Log in to DockerHub
         uses: docker/login-action@v3
         with:
@@ -36,17 +22,10 @@ jobs:
 
       - name: Build and Push Producer Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/producer:${{ env.NEW_TAG }} ./producer
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/producer:${{ env.NEW_TAG }}
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/producer:${{ env.NEW_TAG }} ./source-files/producer
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/producer:1.0.0
 
       - name: Build and Push Consumer Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/consumer:${{ env.NEW_TAG }} ./consumer
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/consumer:${{ env.NEW_TAG }}
-
-      - name: Create new Git tag
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git tag ${{ env.NEW_TAG }}
-          git push https://${{ secrets.ACTIONS_PAT }}@github.com/dordavid015/first-project.git ${{ env.NEW_TAG }}
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/consumer:${{ env.NEW_TAG }} ./source-files/consumer
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/consumer:1.0.0
