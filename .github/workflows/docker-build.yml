@@ -22,10 +22,10 @@ jobs:
 
       - name: Build and Push Producer Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/producer:${{ env.NEW_TAG }} ./source-files/producer
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/producer:1.0.0 ./source-files/producer
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/producer:1.0.0
 
       - name: Build and Push Consumer Image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/consumer:${{ env.NEW_TAG }} ./source-files/consumer
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/consumer:1.0.0 ./source-files/consumer
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/consumer:1.0.0
