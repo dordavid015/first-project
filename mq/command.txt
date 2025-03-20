@@ -1,1 +1,0 @@
-kubectl exec -it rabbitmq-0 -- curl localhost:9419/metrics
