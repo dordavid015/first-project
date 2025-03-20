@@ -1,0 +1,70 @@
+---
+# Source: producer/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: producer
+  labels:
+    helm.sh/chart: producer-0.1.0
+    app.kubernetes.io/name: producer
+    app.kubernetes.io/instance: producer
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/name: producer
+    app.kubernetes.io/instance: producer
+---
+# Source: producer/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer
+  labels:
+    helm.sh/chart: producer-0.1.0
+    app.kubernetes.io/name: producer
+    app.kubernetes.io/instance: producer
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: producer
+      app.kubernetes.io/instance: producer
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: producer
+        app.kubernetes.io/instance: producer
+    spec:
+      containers:
+        - name: producer
+          image: "dordavidisrael/producer:1.0.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: MQ_HOST
+              value: "rabbitmq-service"
+            - name: MQ_PORT
+              value: "5672"
+            - name: MQ_USER
+              value: "user"
+            - name: MQ_PASS
+              value: "password"
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi

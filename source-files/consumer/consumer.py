@@ -3,6 +3,7 @@ from argparse import RawTextHelpFormatter
 from time import sleep
 import threading
 from prometheus_client import Counter, start_http_server
+import os
 
 # Define Prometheus metrics
 MESSAGE_COUNTER = Counter('consumer_messages_count', 
@@ -54,6 +55,7 @@ if __name__ == '__main__':
     username = os.environ.get("MQ_USER", "user")
     password = os.environ.get("MQ_PASS", "password")
     credentials = pika.PlainCredentials(username, password)
+    credentials = pika.PlainCredentials("guest","guest")
 
     parameters = pika.ConnectionParameters(args.server,
                                            int(args.port),

@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: dordavidisrael/consumer
-  tag: latest
+  tag: 1.0.0
   pullPolicy: IfNotPresent
 
 service:
@@ -25,5 +25,5 @@ resources:
     cpu: 500m
     memory: 512Mi
   requests:
-    cpu: 200m
+    cpu: 100m
     memory: 256Mi

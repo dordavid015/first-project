@@ -1,6 +1,7 @@
 import pika, logging, sys, argparse
 from argparse import RawTextHelpFormatter
 from time import sleep
+import os
 
 if __name__ == '__main__':
     examples = sys.argv[0] + " -p 5672 -s rabbitmq -m 'Hello' "
@@ -29,6 +30,7 @@ if __name__ == '__main__':
     username = os.environ.get("MQ_USER", "user")
     password = os.environ.get("MQ_PASS", "password")
     credentials = pika.PlainCredentials(username, password)
+    credentials = pika.PlainCredentials("guest","guest")
 
     parameters = pika.ConnectionParameters(args.server,
                                            int(args.port),
