@@ -1,0 +1,9 @@
+replicaCount: 1
+image:
+  repository: dordavidisrael/consumer
+  tag: 1.0.0
+  pullPolicy: Always
+service:
+  enabled: true
+  type: ClusterIP
+  port: 9422

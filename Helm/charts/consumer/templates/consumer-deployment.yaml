@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-consumer
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-consumer
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-consumer
+    spec:
+      containers:
+      - name: consumer
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        command: ["python", "consumer.py", "-p", "5672", "-s", "{{ .Release.Name }}-rabbitmq"]

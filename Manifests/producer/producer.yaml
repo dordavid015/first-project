@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: producer
+  template:
+    metadata:
+      labels:
+        app: producer
+    spec:
+      containers:
+      - name: producer
+        image: dordavidisrael/producer:1.0.0
+        command: ["python", "producer.py", "-p", "5672", "-s", "rabbitmq-service", "-m", "Hello"]
+        imagePullPolicy: Always

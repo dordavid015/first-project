@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: dordavidisrael/consumer:1.0.0
+        ports:
+        - containerPort: 9422
+        command: ["python", "consumer.py", "-p", "5672", "-s", "rabbitmq-service"]
+        imagePullPolicy: Always

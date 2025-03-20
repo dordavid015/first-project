@@ -1,0 +1,15 @@
+replicaCount: 1
+image:
+  repository: rabbitmq
+  tag: 3-management
+  pullPolicy: Always
+service:
+  type: ClusterIP
+  ports:
+    api: 5672
+    management: 15672
+livenessProbe:
+  initialDelaySeconds: 15
+  periodSeconds: 10
+  timeoutSeconds: 5
+  failureThreshold: 5

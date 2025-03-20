@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-producer
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-producer
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-producer
+    spec:
+      containers:
+      - name: producer
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command: ["python", "producer.py", "-p", "5672", "-s", "{{ .Release.Name }}-rabbitmq", "-m", "{{ .Values.message }}"]
