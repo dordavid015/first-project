@@ -37,9 +37,10 @@ if __name__ == '__main__':
     if args.server == None:
         print "Missing required argument: -s/--server"
         sys.exit(1)
-        
+    
+    print("going to sleep for 12 seconds")
     # sleep a few seconds to allow RabbitMQ server to come up
-    sleep(10)
+    sleep(12)
     
     logging.basicConfig(level=logging.INFO)
     LOG = logging.getLogger(__name__)

@@ -22,6 +22,7 @@ if __name__ == '__main__':
         sys.exit(1)
         
     # sleep a few seconds to allow RabbitMQ server to come up
+    print("going to sleep for 12 seconds")
     sleep(12)
     
     logging.basicConfig(level=logging.INFO)
