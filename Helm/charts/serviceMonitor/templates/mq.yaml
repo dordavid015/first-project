@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}-rabbitmq-service-monitor
+  namespace: {{ .Values.monitorNamespace }}
+  labels:
+    release: {{ $.Release.Name | quote }}
+spec:
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/name: rabbitmq
+  endpoints:
+  - port: metrics
+    interval: 15s
+    path: /metrics

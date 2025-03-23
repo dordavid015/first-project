@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-consumer
+  labels:
+    name: {{ .Release.Name }}-consumer
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: {{ .Release.Name }}-consumer
+  ports:
+    - protocol: TCP
+      name: metrics
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}

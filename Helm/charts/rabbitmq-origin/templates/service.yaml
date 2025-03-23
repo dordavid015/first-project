@@ -1,0 +1,20 @@
+{{- if .Values.enabled }}
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-rabbitmq
+spec:
+  selector:
+    app: {{ .Release.Name }}-rabbitmq
+  ports:
+  - name: rabbitmq-api
+    protocol: TCP
+    port: {{ .Values.service.ports.api }}
+    targetPort: {{ .Values.service.ports.api }}
+  - name: rabbitmq-management
+    protocol: TCP
+    port: {{ .Values.service.ports.management }}
+    targetPort: {{ .Values.service.ports.management }}
+  type: {{ .Values.service.type }}
+{{- end }}

@@ -1,0 +1,21 @@
+dependencies:
+- name: consumer
+  repository: ""
+  version: 0.1.0
+- name: rabbitmq-origin
+  repository: ""
+  version: 0.1.0
+- name: producer
+  repository: ""
+  version: 0.1.0
+- name: serviceMonitor
+  repository: ""
+  version: 0.1.0
+- name: rabbitmq
+  repository: https://charts.bitnami.com/bitnami
+  version: 15.4.0
+- name: kube-prometheus-stack
+  repository: ""
+  version: 70.2.1
+digest: sha256:88b5b02b08b9769b683898c6001585d81dc5f8f471c7f0a28a8c7e66c0f34651
+generated: "2025-03-23T20:28:12.303918977+02:00"
