@@ -74,4 +74,4 @@ jobs:
         with:
           message: "Update image tags to ${{ env.NEW_TAG }} [skip ci]"
           add: "Helm/charts/producer/values.yaml Helm/charts/consumer/values.yaml"
-          default_author: github_actions
+          default_author: github_actions 
