@@ -70,6 +70,6 @@ jobs:
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add Helm/charts/producer/values.yaml Helm/charts/consumer/values.yaml
+          git add HELM/charts/producer/values.yaml HELM/charts/consumer/values.yaml
           git commit -m "Update image tag to ${{ env.NEW_TAG }}"
-          git push
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }}
