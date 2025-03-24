@@ -72,4 +72,4 @@ jobs:
           git config --global user.name "GitHub Actions"
           git add .
           git commit -m "Update image tag to ${{ env.NEW_TAG }}"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:refs/heads/main
+          git push https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:refs/heads/main
