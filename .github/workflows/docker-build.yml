@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - main
+    paths-ignore:  # 🛑 לא מפעיל את ה-Workflow אם רק ה-values.yaml השתנה
+      - "HELM/charts/**/values.yaml"
 
 jobs:
   build-and-push:
@@ -55,3 +57,19 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/consumer:${{ env.NEW_TAG }}
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/consumer:${{ env.NEW_TAG }} ${{ secrets.DOCKERHUB_USERNAME }}/consumer:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/consumer:latest
+
+      - name: Update Producer Helm values.yaml
+        run: |
+          sed -i 's|tag: .*|tag: ${{ env.NEW_TAG }}|' HELM/charts/producer/values.yaml
+
+      - name: Update Consumer Helm values.yaml
+        run: |
+          sed -i 's|tag: .*|tag: ${{ env.NEW_TAG }}|' HELM/charts/consumer/values.yaml
+
+      - name: Commit and Push Helm Updates
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git add HELM/charts/producer/values.yaml HELM/charts/consumer/values.yaml
+          git commit -m "Update Helm image tags to ${{ env.NEW_TAG }}"
+          git push
