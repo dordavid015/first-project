@@ -58,18 +58,18 @@ jobs:
           docker tag ${{ secrets.DOCKERHUB_USERNAME }}/consumer:${{ env.NEW_TAG }} ${{ secrets.DOCKERHUB_USERNAME }}/consumer:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/consumer:latest
 
-      - name: Update Producer Helm values.yaml
+      - name: Update tag in HELM charts for Producer
         run: |
-          sed -i 's|tag: .*|tag: ${{ env.NEW_TAG }}|' HELM/charts/producer/values.yaml
+          sed -i 's|tag: .*|tag: ${{ env.NEW_TAG }}|' Helm/charts/producer/values.yaml
 
-      - name: Update Consumer Helm values.yaml
+      - name: Update tag in HELM charts for Consumer
         run: |
-          sed -i 's|tag: .*|tag: ${{ env.NEW_TAG }}|' HELM/charts/consumer/values.yaml
+          sed -i 's|tag: .*|tag: ${{ env.NEW_TAG }}|' Helm/charts/consumer/values.yaml
 
-      - name: Commit and Push Helm Updates
+      - name: Commit and Push changes to HELM charts
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add HELM/charts/producer/values.yaml HELM/charts/consumer/values.yaml
-          git commit -m "Update Helm image tags to ${{ env.NEW_TAG }}"
+          git add Helm/charts/producer/values.yaml Helm/charts/consumer/values.yaml
+          git commit -m "Update image tag to ${{ env.NEW_TAG }}"
           git push
