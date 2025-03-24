@@ -66,10 +66,12 @@ jobs:
         run: |
           sed -i 's|tag: .*|tag: ${{ env.NEW_TAG }}|' Helm/charts/consumer/values.yaml
 
-      - name: Commit and Push changes to HELM charts
+
+
+      - name: Commit and Push changes to Helm charts
         run: |
-          git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add .
-          git commit -m "Update image tag to ${{ env.NEW_TAG }}"
-          git push https://x-access-token:${{ secrets.MY_GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:refs/heads/main
+          git config --global user.email "actions@github.com"
+          git add Helm/charts/producer/values.yaml Helm/charts/consumer/values.yaml
+          git commit -m "Update image tags to ${{ env.NEW_TAG }} [skip ci]" || echo "No changes to commit"
+          git push
