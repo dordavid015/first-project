@@ -35,7 +35,7 @@ if __name__ == '__main__':
         print "Missing required argument: -p/--port"
         sys.exit(1)
     if args.server == None:
-        print "Missing required argument: -s/--server"
+        print "Missing required argument: -s/--server" 
         sys.exit(1)
     
     print("going to sleep for 12 seconds")
