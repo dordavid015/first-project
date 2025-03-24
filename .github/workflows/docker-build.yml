@@ -69,9 +69,8 @@ jobs:
 
 
       - name: Commit and Push changes to Helm charts
-        run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add Helm/charts/producer/values.yaml Helm/charts/consumer/values.yaml
-          git commit -m "Update image tags to ${{ env.NEW_TAG }} [skip ci]" || echo "No changes to commit"
-          git push
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: "Update image tags to ${{ env.NEW_TAG }} [skip ci]"
+          add: "Helm/charts/producer/values.yaml Helm/charts/consumer/values.yaml"
+          default_author: github_actions
